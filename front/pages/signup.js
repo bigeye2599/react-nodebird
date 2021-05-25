@@ -1,19 +1,19 @@
 import React, { useCallback, useState } from "react";
 import { Form, Input, Checkbox, Button } from "antd";
 
+export const useInput = (initValue = null) => {
+  const [value, setter] = useState(initValue);
+  const handler = useCallback((e) => {
+    setter(e.target.value);
+  }, []);
+  return [value, handler];
+};
+
 const Signup = () => {
   const [passwordCheck, setPasswordCheck] = useState("");
   const [term, setTerm] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
   const [termError, setTermError] = useState(false);
-
-  const useInput = (initValue = null) => {
-    const [value, setter] = useState(initValue);
-    const handler = useCallback((e) => {
-      setter(e.target.value);
-    }, []);
-    return [value, handler];
-  };
 
   const [id, onChangeId] = useInput("");
   const [nick, onChangeNick] = useInput("");
@@ -27,10 +27,6 @@ const Signup = () => {
       return setTermError(true);
     }
   }, [password, passwordCheck, term]);
-
-  const onFinishFailed = useCallback((errorInfo) => {
-    console.log("Failed:", errorInfo);
-  }, []);
 
   const onChangePasswordCheck = useCallback(
     (e) => {
@@ -46,11 +42,7 @@ const Signup = () => {
   }, []);
 
   return (
-    <Form
-      style={{ padding: 10 }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-    >
+    <Form style={{ padding: 10 }} onFinish={onFinish}>
       <div>
         <label htmlFor="user-id">아이디</label>
         <br />
