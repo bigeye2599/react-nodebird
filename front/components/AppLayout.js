@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
 import { Button, Input, Menu, Row, Col, Card, Avatar } from "antd";
@@ -69,7 +70,10 @@ const AppLayout = ({ children }) => {
 };
 
 AppLayout.prototype = {
-  children: PropTypes.node,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 export default AppLayout;
