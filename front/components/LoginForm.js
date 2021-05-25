@@ -10,7 +10,7 @@ const LoginForm = () => {
     console.log(id, password);
   }, [id, password]);
   return (
-    <Form onFinish={onFinish}>
+    <Form onFinish={onFinish} style={{ padding: "10px" }}>
       <div>
         <label htmlFor="user-id">아이디</label>
         <br />

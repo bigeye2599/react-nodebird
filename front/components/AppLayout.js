@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import PropTypes from "prop-types";
-import { Button, Input, Menu, Row, Col, Card, Avatar, Form } from "antd";
+import { Input, Menu, Row, Col, Card, Avatar } from "antd";
 import LoginForm from "./LoginForm";
 
 const dummy = {
@@ -30,8 +30,7 @@ const AppLayout = ({ children }) => {
           <Input.Search enterButton style={{ verticalAlign: "middle" }} />
         </Menu.Item>
       </Menu>
-
-      <Row>
+      <Row gutter={10}>
         <Col xs={24} md={6}>
           {dummy.isLoggedIn ? (
             <Card
