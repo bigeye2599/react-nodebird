@@ -1,20 +1,12 @@
 import React from "react";
-import { Form, Input, Button, List, Card } from "antd";
+import { Button, List, Card } from "antd";
 import { StopOutlined } from "@ant-design/icons";
+import NicknameEditForm from "../components/NicknameEditForm";
 
 const Profile = () => {
   return (
     <div>
-      <Form
-        style={{
-          marginBottom: "20px",
-          border: "1px solid #d9d9d9",
-          padding: "20px",
-        }}
-      >
-        <Input addonBefore="닉네임" />
-        <Button type="primary">수정</Button>
-      </Form>
+      <NicknameEditForm />
       <List
         style={{ marginBottom: "20px" }}
         grid={{ gutter: 4, xs: 2, md: 3 }}
@@ -25,7 +17,7 @@ const Profile = () => {
         dataSource={["데이터1", "데이터2", "데이터3"]}
         renderItem={(item) => (
           <List.Item style={{ marginTop: "20px" }}>
-            <Card actions={[<StopOutlined />]}>
+            <Card actions={[<StopOutlined key="stop" />]}>
               <Card.Meta description={item} />
             </Card>
           </List.Item>
@@ -41,7 +33,7 @@ const Profile = () => {
         dataSource={["데이터1", "데이터2", "데이터3"]}
         renderItem={(item) => (
           <List.Item style={{ marginTop: "20px" }}>
-            <Card actions={[<StopOutlined />]}>
+            <Card actions={[<StopOutlined key="stop" />]}>
               <Card.Meta description={item} />
             </Card>
           </List.Item>
