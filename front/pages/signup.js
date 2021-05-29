@@ -1,12 +1,7 @@
 import React, { useCallback, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Form, Input, Checkbox, Button } from "antd";
-import {
-  signUpAction,
-  signUpId,
-  signUpNick,
-  signUpPassword,
-} from "../reducers/user";
+import { SIGN_UP_REQUEST } from "../reducers/user";
 
 export const useInput = (initValue = null) => {
   const [value, setter] = useState(initValue);
@@ -35,7 +30,7 @@ const Signup = () => {
     if (!term) {
       return setTermError(true);
     }
-    dispatch(signUpAction({ id, password, nick }));
+    dispatch({ type: SIGN_UP_REQUEST, data: { id, password, nick } });
   }, [password, passwordCheck, term]);
 
   const onChangePasswordCheck = useCallback(
