@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Form, Input, Checkbox, Button } from "antd";
 import { SIGN_UP_REQUEST } from "../reducers/user";
 
@@ -22,6 +22,7 @@ const Signup = () => {
   const [password, onChangePassword] = useInput("");
 
   const dispatch = useDispatch();
+  const { isSigningUp } = useSelector((state) => state.user);
 
   const onFinish = useCallback(() => {
     if (password !== passwordCheck) {
@@ -92,7 +93,7 @@ const Signup = () => {
         )}
       </div>
       <div style={{ marginTop: 10 }}>
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" loading={isSigningUp}>
           가입하기
         </Button>
       </div>

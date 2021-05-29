@@ -33,12 +33,14 @@ function* watchLogin() {
 }
 
 function signUpApi() {
-  return;
+  return axios.post("/login");
 }
 
 function* signUp() {
   try {
-    yield call(signUpApi);
+    // yield call(signUpApi);
+    yield delay(2000);
+    throw new Error("에러에러에러");
     yield put({
       type: SIGN_UP_SUCCESS,
     });
@@ -46,6 +48,7 @@ function* signUp() {
     console.log(e);
     yield put({
       type: SIGN_UP_FAILURE,
+      error: e,
     });
   }
 }
