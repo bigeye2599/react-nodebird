@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { Card, Avatar, Button, Form, List, Input, Comment } from "antd";
@@ -15,6 +15,7 @@ const PostCard = ({ post }) => {
   const [commentText, setCommentText] = useState("");
 
   const { me } = useSelector((state) => state.user);
+  const { commentAdded, isAddingComment } = useSelector((state) => state.post);
   const dispatch = useDispatch();
 
   const onToggleComment = useCallback(() => {
@@ -25,13 +26,17 @@ const PostCard = ({ post }) => {
     if (!me) {
       return alert("로그인이 필요합니다.");
     }
-    dispatch({ type: ADD_COMMENT_REQUEST });
-  }, []);
+    dispatch({ type: ADD_COMMENT_REQUEST, data: { postId: post.id } });
+  }, [me && me.id]);
 
   const onChangeCommentText = useCallback((e) => {
     setCommentText(e.target.value);
     e.preventDefault();
   }, []);
+
+  useEffect(() => {
+    setCommentText("");
+  }, [commentAdded === true]);
 
   return (
     <div>
@@ -62,21 +67,20 @@ const PostCard = ({ post }) => {
                 onChange={onChangeCommentText}
               />
             </Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" loading={isAddingComment}>
               삐약
             </Button>
           </Form>
           <List
             header={`${post.Comments ? post.Comments.length : 0} 댓글`}
             itemLayout="horizontal"
-            dataSource={post.Comment || []}
+            dataSource={post.Comments || []}
             renderItem={(item) => (
               <li>
                 <Comment
                   author={item.User.nickname}
                   avatar={<Avatar>{item.User.nickname[0]}</Avatar>}
                   content={item.content}
-                  datetime={item.createdAt}
                 />
               </li>
             )}
