@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
   const Post = sequelize.define(
-    "Post",
+    "Post", // 테이블명은 posts
     {
       content: {
         type: DataTypes.TEXT,
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       charset: "utf8mb4",
-      collate: "utf8mb4-_general_ci",
+      collate: "utf8mb4_unicode_ci",
     }
   );
 
@@ -17,7 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     db.Post.belongsTo(db.User);
     db.Post.hasMany(db.Comment);
     db.Post.hasMany(db.Image);
-    db.Post.belongsTo(db.Post);
+    db.Post.belongsTo(db.Post, { as: "Retweet" });
+    db.Post.belongsToMany(db.Hashtag, { through: "PostHashtag" });
+    db.Post.belongsToMany(db.User, { through: "Like", as: "Likers" });
   };
 
   return Post;
