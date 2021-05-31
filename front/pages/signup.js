@@ -39,8 +39,11 @@ const Signup = () => {
     if (!term) {
       return setTermError(true);
     }
-    dispatch({ type: SIGN_UP_REQUEST, data: { id, password, nick } });
-  }, [password, passwordCheck, term]);
+    dispatch({
+      type: SIGN_UP_REQUEST,
+      data: { userId: id, password, nickname: nick },
+    });
+  }, [id, nick, password, passwordCheck, term]);
 
   const onChangePasswordCheck = useCallback(
     (e) => {
