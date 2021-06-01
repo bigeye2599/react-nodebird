@@ -9,16 +9,18 @@ import {
   SIGN_UP_SUCCESS,
 } from "../reducers/user";
 
-function loginAPI() {
-  return axios.post("/login");
+axios.defaults.baseURL = "http://localhost:3065/api";
+
+function loginAPI(loginData) {
+  return axios.post("/user/login", loginData);
 }
 
-function* login() {
+function* login(action) {
   try {
-    // yield call(loginAPI);
-    yield delay(2000);
+    const result = yield call(loginAPI, action.data);
     yield put({
       type: LOG_IN_SUCCESS,
+      data: result.data,
     });
   } catch (e) {
     console.log(e);
@@ -33,7 +35,7 @@ function* watchLogin() {
 }
 
 function signUpApi(signUpData) {
-  return axios.post("http://localhost:3065/api/user/", signUpData);
+  return axios.post("/user/", signUpData);
 }
 
 function* signUp(action) {

@@ -12,7 +12,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const onFinish = useCallback(() => {
-    dispatch({ type: LOG_IN_REQUEST, data: { id, password } });
+    dispatch({ type: LOG_IN_REQUEST, data: { userId: id, password } });
   }, [id, password]);
   return (
     <Form onFinish={onFinish} style={{ padding: "10px" }}>
