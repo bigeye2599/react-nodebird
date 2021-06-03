@@ -7,7 +7,23 @@ const router = express.Router();
 
 // /api/user
 
-router.get("/", (req, res) => {});
+router.get("/", async (req, res) => {
+  if (!req.user) {
+    return res.status(401).send("로그인이 필요합니다.");
+  }
+  const user = req.user.toJSON();
+  const fullUser = await db.User.findOne({
+    where: { id: user.id },
+    include: [
+      { model: db.Post, as: "Posts", attributes: ["id"] },
+      { model: db.User, as: "Followings", attributes: ["id"] },
+      { model: db.User, as: "Followers", attributes: ["id"] },
+    ],
+    attributes: ["id", "nickname", "userId"],
+  });
+
+  return res.json(fullUser);
+});
 router.post("/", async (req, res, next) => {
   try {
     const exUser = await db.User.findOne({
