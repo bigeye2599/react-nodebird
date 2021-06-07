@@ -15,8 +15,6 @@ import {
   LOAD_USER_REQUEST,
 } from "../reducers/user";
 
-axios.defaults.baseURL = "http://localhost:3065/api";
-
 function logInAPI(loginData) {
   return axios.post("/user/login", loginData, {
     withCredentials: true,

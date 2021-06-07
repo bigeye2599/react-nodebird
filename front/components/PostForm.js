@@ -15,8 +15,8 @@ const PostForm = () => {
   }, [postAdded === true]);
 
   const onFinish = useCallback(() => {
-    dispatch({ type: ADD_POST_REQUEST, data: { text } });
-  }, []);
+    dispatch({ type: ADD_POST_REQUEST, data: { content: text } });
+  }, [text]);
 
   const onChangeText = useCallback((e) => {
     setText(e.target.value);
