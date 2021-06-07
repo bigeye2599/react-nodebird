@@ -7,6 +7,9 @@ import {
   ADD_POST_FAILURE,
   ADD_POST_REQUEST,
   ADD_POST_SUCCESS,
+  LOAD_MAIN_POSTS_FAILURE,
+  LOAD_MAIN_POSTS_REQUEST,
+  LOAD_MAIN_POSTS_SUCCESS,
 } from "../reducers/post";
 
 function addPostAPI(postData) {
@@ -56,6 +59,33 @@ function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
+function loadMainPostsAPI() {
+  return axios.get("/posts");
+}
+
+function* loadMainPosts() {
+  try {
+    const result = yield call(loadMainPostsAPI);
+    yield put({
+      type: LOAD_MAIN_POSTS_SUCCESS,
+      data: result.data,
+    });
+  } catch (e) {
+    yield put({
+      type: LOAD_MAIN_POSTS_FAILURE,
+      error: e,
+    });
+  }
+}
+
+function* watchLoadMainPosts() {
+  yield takeLatest(LOAD_MAIN_POSTS_REQUEST, loadMainPosts);
+}
+
 export default function* postSage() {
-  yield all([fork(watchAddPost), fork(watchAddComment)]);
+  yield all([
+    fork(watchLoadMainPosts),
+    fork(watchAddPost),
+    fork(watchAddComment),
+  ]);
 }

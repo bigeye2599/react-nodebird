@@ -15,7 +15,10 @@ const PostForm = () => {
   }, [postAdded === true]);
 
   const onFinish = useCallback(() => {
-    dispatch({ type: ADD_POST_REQUEST, data: { content: text } });
+    if (!text || !text.trim()) {
+      return alert("게시글을 작성하세요.");
+    }
+    dispatch({ type: ADD_POST_REQUEST, data: { content: text.trim() } });
   }, [text]);
 
   const onChangeText = useCallback((e) => {

@@ -18,7 +18,6 @@ router.post("/", async (req, res, next) => {
           })
         )
       );
-      console.log("result >>>>>>>>>> : ", result);
       await newPost.addHashtags(result.map((r) => r[0]));
     }
     // 방법 1
