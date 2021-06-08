@@ -10,14 +10,14 @@ import PropTypes from "prop-types";
 import "antd/dist/antd.css";
 import AppLayout from "../components/AppLayout";
 
-const NodeBird = ({ Component }) => {
+const NodeBird = ({ Component, pageProps }) => {
   return (
     <>
       <Head>
         <title>NodeBird</title>
       </Head>
       <AppLayout>
-        <Component />
+        <Component {...pageProps} />
       </AppLayout>
     </>
   );
@@ -26,6 +26,17 @@ const NodeBird = ({ Component }) => {
 NodeBird.propTypes = {
   Component: PropTypes.elementType.isRequired,
   store: PropTypes.object.isRequired,
+  pageProps: PropTypes.object.isRequired,
+};
+
+NodeBird.getInitialProps = async (context) => {
+  console.log("context >>>>>>>>>>>> ", context);
+  const { ctx, Component } = context;
+  let pageProps = {};
+  if (Component.getInitialProps) {
+    pageProps = await Component.getInitialProps(ctx);
+  }
+  return { pageProps };
 };
 
 const configureStore = (initialState, options) => {
