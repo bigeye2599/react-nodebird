@@ -24,17 +24,17 @@ const User = ({ id }) => {
             <div key="twit">
               짹짹
               <br />
-              {userInfo.Posts.length}
+              {userInfo.Posts}
             </div>,
             <div key="following">
               팔로잉
               <br />
-              {userInfo.Followings.length}
+              {userInfo.Followings}
             </div>,
             <div key="follower">
               팔로워
               <br />
-              {userInfo.Followers.length}
+              {userInfo.Followers}
             </div>,
           ]}
         >

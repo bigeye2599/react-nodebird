@@ -92,18 +92,19 @@ function* watchLogOut() {
   yield takeLatest(LOG_OUT_REQUEST, logOut);
 }
 
-function loadUserApi() {
-  return axios.get("/user/", {
+function loadUserApi(userId) {
+  return axios.get(userId ? `/user/${userId}` : "/user/", {
     withCredentials: true,
   });
 }
 
-function* loadUser() {
+function* loadUser(action) {
   try {
-    const result = yield call(loadUserApi);
+    const result = yield call(loadUserApi, action.data);
     yield put({
       type: LOAD_USER_SUCCESS,
       data: result.data,
+      me: !action.data,
     });
   } catch (e) {
     console.log(e);
