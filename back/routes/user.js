@@ -47,9 +47,9 @@ router.post("/", async (req, res, next) => {
     return next(e);
   }
 });
-router.get(":id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
-    const user = db.User.findOne({
+    const user = await db.User.findOne({
       where: { id: parseInt(req.params.id, 10) },
       include: [
         {
@@ -74,7 +74,7 @@ router.get(":id", async (req, res, next) => {
     jsonUser.Posts = jsonUser.Posts ? jsonUser.Posts.length : 0;
     jsonUser.Followings = jsonUser.Followings ? jsonUser.Followings.length : 0;
     jsonUser.Followers = jsonUser.Followers ? jsonUser.Followers.length : 0;
-    req.json(jsonUser);
+    res.json(jsonUser);
   } catch (e) {
     console.error(e);
     next(e);

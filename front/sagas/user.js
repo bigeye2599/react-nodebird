@@ -1,4 +1,12 @@
-import { all, call, delay, fork, put, takeLatest } from "redux-saga/effects";
+import {
+  all,
+  call,
+  delay,
+  fork,
+  put,
+  takeEvery,
+  takeLatest,
+} from "redux-saga/effects";
 import axios from "axios";
 import {
   LOG_IN_REQUEST,
@@ -116,7 +124,7 @@ function* loadUser(action) {
 }
 
 function* watchLoadUser() {
-  yield takeLatest(LOAD_USER_REQUEST, loadUser);
+  yield takeEvery(LOAD_USER_REQUEST, loadUser);
 }
 
 export default function* userSage() {

@@ -111,7 +111,7 @@ function* watchLoadHashtagPosts() {
   yield takeLatest(LOAD_HASHTAG_POSTS_REQUEST, loadHashtagPosts);
 }
 
-function loadUserPostsAPI() {
+function loadUserPostsAPI(id) {
   return axios.get(`/user/${id}/posts`);
 }
 
