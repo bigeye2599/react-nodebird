@@ -9,10 +9,10 @@ import {
   MessageOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import { ADD_COMMENT_REQUEST } from "../reducers/post";
+import { ADD_COMMENT_REQUEST, LOAD_COMMENTS_REQUEST } from "../reducers/post";
 
 const PostCard = ({ post }) => {
-  const [commentFormOpened, setCommentFormOpened] = useState("");
+  const [commentFormOpened, setCommentFormOpened] = useState(false);
   const [commentText, setCommentText] = useState("");
 
   const { me } = useSelector((state) => state.user);
@@ -21,23 +21,32 @@ const PostCard = ({ post }) => {
 
   const onToggleComment = useCallback(() => {
     setCommentFormOpened((prev) => !prev);
+    if (!commentFormOpened) {
+      dispatch({
+        type: LOAD_COMMENTS_REQUEST,
+        data: post.id,
+      });
+    }
   }, []);
 
   const onFinishComment = useCallback(() => {
     if (!me) {
       return alert("로그인이 필요합니다.");
     }
-    dispatch({ type: ADD_COMMENT_REQUEST, data: { postId: post.id } });
-  }, [me && me.id]);
+    dispatch({
+      type: ADD_COMMENT_REQUEST,
+      data: { postId: post.id, content: commentText },
+    });
+  }, [me && me.id, commentText]);
+
+  useEffect(() => {
+    setCommentText("");
+  }, [commentAdded === true]);
 
   const onChangeCommentText = useCallback((e) => {
     setCommentText(e.target.value);
     e.preventDefault();
   }, []);
-
-  useEffect(() => {
-    setCommentText("");
-  }, [commentAdded === true]);
 
   return (
     <div>
