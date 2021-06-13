@@ -2,15 +2,13 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const passport = require("passport");
 const db = require("../models");
+const { isLoggedIn } = require("./middelware");
 
 const router = express.Router();
 
 // /api/user
 
-router.get("/", async (req, res) => {
-  if (!req.user) {
-    return res.status(401).send("로그인이 필요합니다.");
-  }
+router.get("/", isLoggedIn, async (req, res) => {
   const user = req.user.toJSON();
   const fullUser = await db.User.findOne({
     where: { id: user.id },
